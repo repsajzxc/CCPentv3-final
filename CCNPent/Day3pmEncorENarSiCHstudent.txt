@@ -195,25 +195,6 @@ network 208.8.8.0 mask 255.255.255.0
 do sh ip bgp summary
 
 
-@bgp@R1:  ADDRESS FAMILY
-config t
-no router bgp 1
-router bgp 1
-bgp log-neighbor-changes
-address-family 
-neighbor _________ activate
-neighbor _________ activate
-neighbor 208.8.8.4 activate
-
-neighbor _________ remote-as __
-neighbor _________ remote-as __
-neighbor 208.8.8.4 Remote-as 45
-network 10.1.1.0 Mask 255.255.255.252
-network __________ mask __________
-network __________ mask __________
-network __________ mask __________
-do sh ip bgp summary
-
 
 @@Isp3:
 config t
@@ -232,7 +213,9 @@ ip route 0.0.0.0 0.0.0.0 Null 0
 ip route 10.0.0.0 255.0.0.0 209.9.9.1
 end
 
-@@isp2:
+@ISP2 OPTION with - ADDRESS FAMILY AND NO ADDRESS FAMILY
+
+@@isp2: WITH ADDRESS FAMILY
 config t
 router bgp 2
 bgp log-neighbor-changes
@@ -255,6 +238,27 @@ network 0.0.0.0
 ip route 0.0.0.0 0.0.0.0 Null 0
 ip route 10.0.0.0 255.0.0.0 207.7.7.1
 end
+
+
+@@isp2: NO  ADDRESS FAMILY
+config t
+router bgp 2
+bgp log-neighbor-changes
+neighbor 24.2.4.4 remote-as 45
+neighbor 25.2.5.5 remote-as 45
+neighbor 32.3.2.3 remote-as 3
+neighbor 207.7.7.1 remote-as 1
+network 22.22.22.22 mask 255.255.255.255
+network 24.2.4.0 mask 255.255.255.0
+network 25.2.5.0 mask 255.255.255.0
+network 32.3.2.0 mask 255.255.255.0
+network 207.7.7.0 mask 255.255.255.0
+!fake StaticInternet:
+network 0.0.0.0
+ip route 0.0.0.0 0.0.0.0 Null 0
+ip route 10.0.0.0 255.0.0.0 207.7.7.1
+end
+
 
 @ISP1:
 config t
