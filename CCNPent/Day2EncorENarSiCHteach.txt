@@ -319,6 +319,7 @@ OR make it more elaborate:
 config t
 ip access-list extended p1tod2
  permit ip host 10.2.1.101 any
+20 permit ip host 10.2.1.102 any
  exit
 no route-map RMHOPD2
 route-map RMHOPD2 permit 10
@@ -382,6 +383,9 @@ int e1/2
  ip ospf priority 255
 end
 
+@exam talo si R2
+
+
 @r2:
 clear ip ospf process
 
@@ -437,7 +441,6 @@ R2:
 config t
 no ip prefix-list TEST1
 ip prefix-list TEST1 seq 5 deny 11.1.1.1/32
-ip prefix-list TEST1 seq 10 deny 111.1.1.1/32
 ip prefix-list TEST1 seq 15 permit 0.0.0.0/0 le 32
 router ospf 1
  area 0 filter-list prefix TEST1 in
@@ -490,6 +493,7 @@ config t
 ip subnet-zero
 route-map CON
  match interface lo 11
+exit
 int lo 11
  ip add 11.11.11.11 255.255.255.255
 no router ospf 1
@@ -545,7 +549,7 @@ O IA     10.1.1.4/30 [110/20] via 10.1.1.9, 00:00:32, Ethernet1/2
       11.0.0.0/32 is subnetted, 1 subnets
 O E1     11.11.11.11 [110/50] via 10.1.1.9, 00:00:22, Ethernet1/2
 
-MAKE AREA 34 A STUB AREA:
+MAKE AREA 34 A STUB \ edge \ dulo AREA:
  
 R3:
 config t
@@ -574,9 +578,9 @@ What was gone?
 Hence, Stub = no Oe1, or Oe2 its been replaced by O*IA
 but try to ping 1.1.1.1
 
-MAKE AREA 34 A TOTALLY STUBBY AREA:
+MAKE AREA 34 A TOTALLY STUBBY AREA: \ dulong dulong 
 
-R3: totally stubby.
+R3: totally stubby. 
 config t
  router ospf 1
   no area 34 stub
